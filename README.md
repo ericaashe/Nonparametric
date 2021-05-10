@@ -1,13 +1,11 @@
 # Nonparametric
 A statistical framework for integrating non-parametric proxy distributions into geological reconstructions of relative sea level
 
-# AsheEtAl2021
-This repository contains the MATLAB code base for select models from [Ashe et al. 2021]:
+# AsheEtAl[submitted]
+This repository contains the MATLAB code base for select models from [Ashe et al., submitted]:
 'A statistical framework for integrating non-parametric proxy distributions into geological reconstructions of relative sea level'
  
- %Ashe et al. (2019) is published in Quaternary Science Reviews.
-
-[![DOI](https://zenodo.org/badge/156264585.svg)](https://zenodo.org/badge/latestdoi/156264585)
+ This manuscript has been submitted to ASCMO (Advances in Statistical Climatology, Meteorology and Oceanography).
 
 **Project abstract:**
 
@@ -30,7 +28,7 @@ After running the chosen model, the results can be found within a folder where y
 ## Authors
 
 ### Contributors
-* **Erica Ashe, PhD** - *Co-author, Bayesian Statistics* - [GitHub](https://github.com/ericaashe)
+* **Erica Ashe, PhD** - *Author, Bayesian Statistics* - [GitHub](https://github.com/ericaashe)
 
 ### Co-authors
 * **Nicole S. Khan**
