@@ -1,34 +1,35 @@
 # Nonparametric
 A statistical framework for integrating non-parametric proxy distributions into geological reconstructions of relative sea level
 
-# AsheEtAl[submitted]
-This repository contains the MATLAB code base for select models from [Ashe et al., submitted]:
+# AsheEtAl[in review]
+This repository contains the MATLAB code base for select models from [Ashe et al., in review]:
 'A statistical framework for integrating non-parametric proxy distributions into geological reconstructions of relative sea level'
  
- This manuscript has been submitted to ASCMO (Advances in Statistical Climatology, Meteorology and Oceanography).
+ This manuscript is in review with ASCMO (Advances in Statistical Climatology, Meteorology and Oceanography).
 
 **Project abstract:**
 
-> Robust, proxy-based reconstructions of relative sea-level (RSL) change are critical to distinguishing the processes that drive spatial and temporal sea-level variability. Statistical model results rely upon accurate constraints on the relationship between individual proxies and RSL. These relationships can be complex and are often poorly represented by traditional methods that assume Gaussian likelihood distributions. We develop a new statistical framework to estimate past RSL change based on non-parametric, empirical modern distributions of proxy elevations in relation to RSL, applying the framework to corals as an illustrative example.  Using synthetic time-series datasets, we compare the skill of our model in estimating RSL and its variability to that of previously published methods.  We also analyze the sensitivity of the statistical reconstructions to the quantity and precision of proxy data. The new framework resulted in lower bias, greater precision, and better model fit (i.e., higher log-likelihood) than alternative approaches. Accurately (average absolute errors ~4.6 m per kyr) reconstructing rapid (~40 m per kyr) rates of change in RSL, such as those that may have characterized melt-water pulses during deglacial periods, requires a minimum of ~10 data points per kyr of various precision or any number of data with precision similar to mangroves or the reef-crest coral Acropora palmata (90% of data within +/- ~3 m of RSL). Precisely (95% confidence in RSL +/- ~ 5 m) and accurately (with median errors of less than ~ 1.1 m) reconstructing slow (~ 15 m per kyr) rates of change in RSL, such as those that characterized the early Holocene, was possible with fewer data (~ 5 data points per kyr) or any number of data that have precision similar to mangroves or A. palmata. Because of the computational expense of the new model framework, we recommend incorporating the non-parametric likelihood distributions when no other information (e.g., reef facies or epibionts indicative of shallow-water environments to refine coral indicative meaning) or no additional more precise data (e.g., mangroves or \textit{A. palmata}) are available at a location or time period of interest.
+Robust, proxy-based reconstructions of relative sea-level (RSL) change are critical to distinguishing the processes that drive spatial and temporal sea-level variability. Statistical model results rely upon accurate constraints on the relationship between individual proxies and RSL. These relationships can be complex and are often poorly represented by traditional methods that assume Gaussian likelihood distributions. We develop a new statistical framework to estimate past RSL change based on non-parametric, empirical modern distributions of proxy elevations in relation to RSL, applying the framework to corals and mangroves as an illustrative example. We validate our model by comparing its skill in reconstructing RSL and rates of change to two previous RSL models using synthetic time-series datasets based on Holocene sea level in South Florida. The new framework results in lower bias, better model fit, and greater accuracy and precision than alternative approaches. We also perform sensitivity tests during periods of interest -- melt-water pulses (MWP) and the early Holocene -- to analyze the sensitivity of the statistical reconstructions of our model to the quantity and precision of proxy data. We find that employing the model with five to ten high precision data points per kyr enables us to constrain rapid rates of change in RSL, such as those that may have characterized MWPs during deglacial periods, to within +/- ~3 m per kyr with 67% confidence. These high precision indicators, mangroves and the reef-crest coral Acropora palmata, have vertical uncertainties within +/- 3 m 2 sigma). For reconstructing RSL with rates observed during the early Holocene, we conclude that employing the model with of five to ten high precision (or a combination of high and low precision) data points per kyr enables precise estimates of RSL within +/- ~ 2 m (95% CI) and accurate RSL reconstructions with errors <~15 cm.  Employing the non-parametric model with lower precision data, such as Orbicella spp. with vertical uncertainties within +/- ~ 10 m (2 sigma) also produces accurate estimates of RSL with errors <~50 cm, but with less precision, only constraining RSL to +/- ~3 -4 m.  Although the model performs better than previous models in terms of bias, model fit, accuracy, and precision, it is computationally expensive to run because it requires inverting large matrices for every sample. The new model also provides minimal gains over similar models when using high precision data. Therefore, we recommend incorporating the non-parametric likelihood distributions when no other information (e.g., reef facies or epibionts indicative of shallow-water environments to refine coral indicative meaning) or no high precision data are available at a location or during a time period of interest
 
-If you have any questions, comments, or feedback on this work or code, please [contact Erica](mailto:ericaashe@gmail.com) 
+
+If you have any questions, comments, or feedback on this work or code, please [contact Erica](mailto:ericaashe@gmail.com).
 
 ### Dependencies
 All dependencies can be found in MFILES, and all data files needed to run this code or used in the publication are found in IFILES.
 
 ## File Descriptions
 
-There are two main files:
+There is one main file:
 
-1. runValidationTests.m
+1. run.m
 2. runSensitivityTests.m
 
-After running the chosen model, the results can be found within a folder where you are running (or have specified within) the code.
+The type of run must be specified within the file. After running the chosen model, the results can be found within a folder where you are running (or have specified within) the code.
 
 ## Authors
 
 ### Contributors
-* **Erica Ashe, PhD** - *Author, Bayesian Statistics* - [GitHub](https://github.com/ericaashe)
+* **Erica L. Ashe, PhD** - *Author, Bayesian Statistics* - [GitHub](https://github.com/ericaashe)
 
 ### Co-authors
 * **Nicole S. Khan**
