@@ -1,6 +1,8 @@
 # Nonparametric
 A statistical framework for integrating non-parametric proxy distributions into geological reconstructions of relative sea level
 
+[![DOI](https://zenodo.org/badge/366157658.svg)](https://zenodo.org/badge/latestdoi/366157658)
+
 # AsheEtAl[in proof]
 This repository contains the MATLAB code base for select models from [Ashe et al., in proof]:
 'A statistical framework for integrating non-parametric proxy distributions into geological reconstructions of relative sea level'
