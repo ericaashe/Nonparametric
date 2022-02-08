@@ -39,7 +39,7 @@ end
 
 % %% trace of data
 %% look at trace of the orbicella data
-c1 = find(cspec(trainsubz)==1);
+c1 = find(cspecies(trainsubz)==1);
 for ii=1:c1
     clf; clear title;
      plot(thinned_ys(ii,:));
@@ -74,29 +74,14 @@ if exist('all_ys')>0
     end
 end
 % 
-%         clf;
-
-%         for jj=1:7:size(trainsubz)%(thinned_ys,1)
-%             %plot(thet_samples(jj,[500:1500 2000:3000 3500:4500]));
-%             %plot(thet_samples(jj,:));
-%             plot(y_accepted(train_y_acc(jj),:));
-%             %plot(thinned_ys(jj,:));
-%             hold on;
-%         end
-        title('Trace Samples');
-        %title('Trace Thetas Sampled');
-        %% see if I can specify in the legend which ones are of which species
-    %    legend(cspecies(jj));
-        legend({'1','2','3','4','5'});%,'6'});
-        pdfwrite(['trace_data_']);
+        clf;
 
         %% draw histograms of thetas from thinned samples
-        %plotmatrix(y_samples(1:6,:)');
-        plotmatrix(y_accepted(1:6,:)');
-        %plotmatrix(thinned_ys(1:6,:)');
+        plotmatrix(y_accepted(2:7,:)');
+        %plotmatrix(thinned_ys(2:7,:)');
          title('Y Posteriors 1');
          pdfwrite('Y_posteriors1');
-        plotmatrix(y_accepted(7:12,:)');
+        plotmatrix(y_accepted(8:13,:)');
          title('Y Posteriors 2');
          pdfwrite('Y_posteriors2');
 
@@ -108,8 +93,7 @@ end
          title('Y Posteriors Orbicella 1');
          pdfwrite(['Y_posteriorsOrb1' num2str(iii)]);
     end
-         clf;
-    figure;
+    clf;
     for jj=1:7:size(sub9,1)
         clf; 
         %plot(thet_samples(jj,[500:1500 2000:3000 3500:4500]));
@@ -124,12 +108,10 @@ end
         end
     end
 
-    figure;
-    % % plotmatrix(Ys(:,trainsubn1(fig_plotn1)));
-     plotmatrix(thets(:,:)');
-    % plotmatrix(thinned_thets2(:,:)');
-     title('All Hyperparam Posteriors');
-     pdfwrite('All_Hyper_thinned');
+clf;
+plotmatrix(thets(:,:)');
+title('All Hyperparam Posteriors');
+pdfwrite('All_Hyper_thinned');
 
 % clf;
 % for jj=1:32:1000

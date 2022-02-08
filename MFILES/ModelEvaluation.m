@@ -202,6 +202,9 @@ else
     plot(testX(:,3),truths,'r','LineWidth',1);
     plot(testX(:,3),f95u,'--','Color',[.5, .5, .5]);
     plot(testX(:,3),f95l,'--','Color',[.5, .5, .5]);
+    if ~exist('jj', 'var')
+        jj=jjj;
+    end
     pdfwrite(['Synth_post_RSL_' df '_' num2str(jj) '_' num2str(Seed) '_' num2str(truth_flag)]);        
    
     PredictRates;

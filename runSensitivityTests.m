@@ -19,9 +19,10 @@ all=[];
 
 fprintf('Truth Flag %0.0f\t Run Start %0.0f\n', [truth_flag run_start]);
 
-for jjj =run_start:run_end
-    clearvars -except distKern distKernel distKernFlor jjj all run_start run_end counter CEFILES IFILES synthflag truth_flag Seed dateField rng datGIA sfile
-    load(sfile);
+for jjj = run_start:run_end
+    clearvars -except distKern0 distKernel distKernFlor jjj all run_start run_end counter CEFILES IFILES synthflag truth_flag Seed dateField rng datGIA sfile distNorm distKern df pd
+    runSetUp;
+    %    load(sfile);
     modno=3;
     if mod(jjj ,3)==1
         n=1; 
@@ -54,10 +55,14 @@ for jjj =run_start:run_end
         dat_type=7; %limiting and sedimentary
     elseif jjj < 49
         dat_type=8; 
+    elseif jjj < 55
+        dat_type=9; %limiting and sedimentary
+    elseif jjj < 61
+        dat_type=10; 
     end
 
     counter = counter + 1;
-    
+        
     all=[all; modno n t_unc dat_type];
 
     SyntheticSensitivityTesting;

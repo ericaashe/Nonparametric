@@ -198,8 +198,7 @@ for nn=xx:Nsamples
             if cspecies(trainsubz(ii))==0
                 if limiting(trainsubz(ii))==-1||limiting(trainsubz(ii))==1
                     %logpproposed(ii)=logp_limiting(proposal(ii),wfs(ii),stds(ii),Z0(ii),dYs(trainsubz(ii)),limiting(trainsubz(ii)),1,dt(trainsubz(ii)));
-                    %logpproposed(ii)=logp_lim(proposal(ii),wfs(ii),stds(ii),Z0(ii),dYs(trainsubz(ii)),limiting(trainsubz(ii)),1,dt(trainsubz(ii)));
-                    logpproposed(ii)=logp_limx(proposal(ii),wfs(ii),stds(ii),Z0(ii),dYs(trainsubz(ii)),limiting(trainsubz(ii)),1,dt(trainsubz(ii)));
+                    logpproposed(ii)=logp_lim(proposal(ii),wfs(ii),stds(ii),Z0(ii),dYs(trainsubz(ii)),limiting(trainsubz(ii)),1,dt(trainsubz(ii)));
                 else
                     logpproposed(ii)=logp_norm(proposal(ii),Z(ii),dYs(ii),Z0(ii),0,dYs(ii));
                 end
@@ -208,13 +207,15 @@ for nn=xx:Nsamples
             else   
                 if cspecies(trainsubz(ii))==9
                      logpproposed(ii)= log(normpdf(proposal(ii),wfs(ii),stds(ii)))+...
-                        log(pdf(distKern{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));       
+                        log(pdf(distNorm{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));       
+%                        log(pdf(distKern{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));       
 %                    logpproposed(ii)= log(pc*normpdf(proposal(ii),wfs(ii),stds(ii)))+...
 %                       log((1-pc)*pdf(distKern{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));       
                     %disp(fprintf('Num: %0.0f , Prop: %0.0f , Y:%0.0f , Diff: %0.0f , Prob: %0.0f , probs: %0.0f, f: %0.0f, st: %0.0f',[ii proposal(ii) Z0(ii) proposal(ii)-Z0(ii) log(pdf(distKern{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000)) log(normpdf(proposal(ii),wfs(ii),stds(ii))) wfs(ii) stds(ii)]));
                 else
                      logpproposed(ii)= log(normpdf(proposal(ii),wfs(ii),stds(ii)))+...
-                         log(pdf(distKern{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));                                     
+                         log(pdf(distNorm{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));                                     
+%                         log(pdf(distKern{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));                                     
 %                    logpproposed(ii)= log(pc*normpdf(proposal(ii),wfs(ii),stds(ii)))+...
 %                       log((1-pc)*pdf(distKern{cspecies(trainsubz(ii))},(proposal(ii)-Z0(ii))/1000));                                           
                 end
@@ -289,8 +290,11 @@ for nn=xx:Nsamples
         %   disp([sprintf('%0.0f -- ',pp) sprintf('%0.2f ',sum(acc_count))]);
         %   disp(sprintf('%0.3f -- Avg Accept, nn = %0.0f',[mean(acc_count)/nn, nn]));
         sub_big=intersect(find(wacc_count/step_change>.45),find(steps<maxstep));
-        sub_small=intersect(find(wacc_count/step_change <.25),find(wacc_count>0));
+        sub_small=intersect(intersect(find(wacc_count/step_change <.25),find(wacc_count>0)),find(steps>minstep));
         sub_none=intersect(find(wacc_count<1),find(steps<maxstep));
+%         sub_big=intersect(find(wacc_count/step_change>.45),find(steps<maxstep));
+%         sub_small=intersect(find(wacc_count/step_change <.25),find(wacc_count>0));
+%         sub_none=intersect(find(wacc_count<1),find(steps<maxstep));
         if size(sub_none)>0
             steps(sub_none)= steps(sub_none)*1.8;                
         end

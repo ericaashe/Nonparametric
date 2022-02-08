@@ -2,9 +2,27 @@
 %% t_unc is the median amount of age uncertainty (75 or 225 years)
 %% dat_type defines whether we are using the sedimentary (3), acropora(1), or orbicella(2) distribution
 
-%% create data
-[ages,dt,age_true,Y_final,Y_synth,Y_true,dY_synth,limiting,cspecies,meas_err,offset]=CreateSensitivityData(t_unc,n,[0 12000],truth_flag,distKern,limiting,cspecies,dat_type,jjj,dateField,Seed);
+if dat_type == 9
+    dat_type_0 = dat_type;
+    dat_type = 1;
+elseif dat_type == 10
+    dat_type_0 = dat_type;
+    dat_type = 2;
+else
+    dat_type_0 = 0;
+end
 
+%% create data
+if jjj>48
+    jj0=jjj;
+    jjj=jjj-48;
+end
+
+[ages,dt,age_true,Y_final,Y_synth,Y_true,dY_synth,limiting,cspecies,meas_err,offset]=CreateSensitivityData(t_unc,n,[0 12000],truth_flag,distKern0,limiting,cspecies,dat_type,jjj,dateField,Seed);
+
+if exist('jj0','var')
+    jjj=jj0;
+end
 % PlotSensitivityData;
 
 datid = datid(1:N); 
@@ -155,24 +173,48 @@ end
 tic
 train_all=find(limiting~=20);
 dataset=datasets{1};
+% if dat_type_0 == 9 || dat_type_0 == 10
+% %    modno=6; nsamps = 25000;
+%     trainsubx=train_all;
+%     
+%     sub_unif=find(cspecies==1);
+%     delev(sub_unif)=dY(sub_unif);
+%     elev(sub_unif)=Y(sub_unif);
+%     dY(sub_unif)= sqrt((dY(sub_unif)).^2+(2500)^2);  
+%     Y(sub_unif)=Y(sub_unif)+2500;
+%     limiting(sub_unif)=0;
+%     
+%     sub_orb=find(cspecies==9);
+%     delev(sub_orb)=dY(sub_orb);
+%     elev(sub_orb)=Y(sub_orb);
+%     dY(sub_orb)= sqrt((dY(sub_orb)).^2+(10000)^2);  
+%     Y(sub_orb)=Y(sub_orb)+10000;
+%     limiting(sub_orb)=0;
+%     
+%     sampnorm=0;
+%     nsamps = 100000;
+%     
+%     %CompareNormal;
 if max(cspecies) == 0 && isempty(trainsublim) && sampnorm==0
-        wdataset = dataset;
-        clear testsitedef;
-        testsitedef.sites=[];
-        testsitedef.names={};
-        testsitedef.names2={};
-        testsitedef.firstage=[];
-        ii = 1;
-        si=find(datasets{1}.datid==datasets{1}.siteid(ii)); si=si(1);
-        testsitedef.sites(end+1,:)=[datasets{1}.datid(si) datasets{1}.lat(si) datasets{1}.long(si)];
-        testsitedef.names2={testsitedef.names2{:}, datasets{1}.sitenames{ii}};
-        testsitedef.names={datasets{1}.sitenames{ii}};
-        testsitedef.firstage = [testsitedef.firstage -12000];
-        noiseMasks = ones(1,length(theta0));
-        [f2s,sd2s,V2s,testloc]=RegressHoloceneDataSets(wdataset,testsitedef,modelspec(1),theta0,trainsub,noiseMasks,testt,refyear,[]);
+    wdataset = dataset;
+    clear testsitedef;
+    testsitedef.sites=[];
+    testsitedef.names={};
+    testsitedef.names2={};
+    testsitedef.firstage=[];
+    ii = 1;
+    si=find(datasets{1}.datid==datasets{1}.siteid(ii)); si=si(1);
+    testsitedef.sites(end+1,:)=[datasets{1}.datid(si) datasets{1}.lat(si) datasets{1}.long(si)];
+    testsitedef.names2={testsitedef.names2{:}, datasets{1}.sitenames{ii}};
+    testsitedef.names={datasets{1}.sitenames{ii}};
+    testsitedef.firstage = [testsitedef.firstage -12000];
+    noiseMasks = ones(1,length(theta0));
+    [f2s,sd2s,V2s,testloc]=RegressHoloceneDataSets(wdataset,testsitedef,modelspec(1),theta0,trainsub,noiseMasks,testt,refyear,[]);
 
-        %% only sample the hyperparameter values for the normal model
-        sample_Theta;
+    %% only sample the hyperparameter values for the normal model
+    sample_Theta;
+elseif dat_type_0 == 9 || dat_type_0 == 10
+    sample_Ys_Thetas_Norm;
 else
     %% sample sea levels and hyperparameters
     sample_Ys_Thetas;
@@ -193,18 +235,18 @@ testcv02 = @(thet) modelspec.cvfunc(testX(:,3),testX(:,3),dYears(testX(:,3),test
 
 %% when normal is not sampled, add those in to be used in the regression
 y_accepted=[];
-if max(cspecies) == 0 && isempty(trainsublim) && sampnorm == 0
-    ys0=Y(trainsub);
-    ys=[];
-    thinned_ts=[];
-    thets=thinned_thets(:,nburn:end);
-else
+% if jjj>48 || (max(cspecies) == 0 && isempty(trainsublim) && sampnorm == 0)
+%     ys0=Y(trainsub);
+%     ys=[];
+%     thinned_ts=[];
+%     thets=thinned_thets(:,nburn:end);
+% else
     %% includes Ys for normally distributed and sampled values for sampled thinned_ys;
     y_int=repmat(Y,1,size(thinned_ys,2));
     y_int(trainsubz,:)=thinned_ys;
     y_accepted=y_int(train_all,nburn:end);
     trainsubx=train_all;
-end
+% end
 sub_all = intersect(find(limiting~=1),find(limiting~=-1));
 Y0s=repmat(Y(train_all),1,size(y_accepted,2));
 Y0s=y_accepted;

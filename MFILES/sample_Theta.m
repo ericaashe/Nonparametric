@@ -38,11 +38,12 @@ if ~exist('nnn', 'var')
     counts=[];
 
         obsGISfp=ones(size(lat));
-        testreg=testloc.reg;
-        testsites=testloc.sites;
+    %         testreg=testloc.reg;
+    %         testsites=testloc.sites;
         clear testts;
-        testts(:,1:2)=testloc.X(:,1:2);
-        testts(:,3)=testloc.X(:,3);
+        
+        %testloc.X(:,1:2);
+        %testloc.X(:,3);
 
     dYs=dY;
     X1 = [lat long meantime];
@@ -53,22 +54,22 @@ if ~exist('nnn', 'var')
     % trainsub0=trainsub;
 
     dt1t1 = dYears(X1(trainsub,3),X1(trainsub,3));
-    dt1t2 = dYears(X1(trainsub,3),testts(:,3));
-    dt2t2 = dYears(testts(:,3),testts(:,3));
+    %dt1t2 = dYears(X1(trainsub,3),testts(:,3));
+    %dt2t2 = dYears(testts(:,3),testts(:,3));
 
     dy1y1 = dDist(X1(trainsub,1:2),X1(trainsub,1:2));
-    dy1y2 = dDist(X1(trainsub,1:2),testts(:,1:2));
-    dy2y2 = dDist(testts(:,1:2),testts(:,1:2));
+    %dy1y2 = dDist(X1(trainsub,1:2),testts(:,1:2));
+    %dy2y2 = dDist(testts(:,1:2),testts(:,1:2));
 
-    testfp = ones(size(testts(:,3)));
-    fp1fp1=bsxfun(@times,obsGISfp(trainsub)-1,obsGISfp(trainsub)'-1)';
-    fp1fp2=bsxfun(@times,obsGISfp(trainsub)-1,testfp'-1)';
-    fp2fp2=bsxfun(@times,testfp-1,testfp'-1);
+%     testfp = ones(size(testts(:,3)));
+     fp1fp1=bsxfun(@times,obsGISfp(trainsub)-1,obsGISfp(trainsub)'-1)';
+%     fp1fp2=bsxfun(@times,obsGISfp(trainsub)-1,testfp'-1)';
+%     fp2fp2=bsxfun(@times,testfp-1,testfp'-1);
 
     t1=X1(trainsub,3);
     wt1=t1;
     limY=limiting(trainsub);
-    t2=testts(:,3);
+    %t2=testts(:,3);
     %theta0=(lb_thet+ub_thet)./2;
     %theta0=[13600 4750 2730 3224 6.7 338 ];
     %[Ys0,~,logp0] = GaussianProcessRegression(meantime(trainsub0),Y(trainsub0),testt,modelspec.traincv(t1,t1,dt1t1,theta0,0*Ycv(trainsub0,trainsub0),dy1y1,fp1fp1),...
@@ -94,7 +95,10 @@ if ~exist('nnn', 'var')
     trainsubz = find(limiting==0);
     Z = Y(trainsubz);
     %    testX = [lat(trainsubz) long(trainsubz) meantime(trainsubz)];
-
+X1 = [lat long meantime];
+testX = [mean(lat)*ones(length(testt),1) mean(long)*ones(length(testt),1) testt'];
+testXs = [X1; testX];
+testfp = [ones(length(testt),1); obsGISfp(:)];
                 mspec.cvfunc = @(x1,x2,thet) modelspec.cvfunc(x1,x2,dYears(x1,x2),thet,dy1y1',fp1fp1');
                 mspec.dcvfunc = @(x1,x2,thet) modelspec.dcvfunc(x1,x2,dYears(x1,x2),thet,dy1y1',fp1fp1');
                 mspec.ddcvfunc = @(x1,x2,thet) modelspec.ddcvfunc(x1,x2,dYears(x1,x2),thet,dy1y1',fp1fp1');
@@ -195,6 +199,7 @@ if xx~=nsamps
 %                disp(sprintf('%0.0f -- Round %0.0f - %0.0f -- out of bounds',[pp nn ii]));
             else
                 logpproposed=logprobNI(meantime(trainsub),wYs,dt(trainsub),dY(trainsub),modelspec.traincv(t1,t1,dt1t1,proposal,Ycv(trainsub,trainsub),dy1y1,fp1fp1),mspec,proposal);
+                %logpproposed=logprobNI(meantime(trainsub),wYs,dt(trainsub),dY(trainsub),modelspec.traincv(t1,t1,dt1t1,proposal,Ycv(trainsub,trainsub),dy1y1,fp1fp1),[],proposal);
 %                 [~,~,logpproposed(ii)] = GaussianProcessRegression_ea(meantime(trainsub),wYs,testt,...
 %                         modelspec.traincv(t1,t1,dt1t1,proposal,Ycv(trainsub,trainsub),dy1y1,fp1fp1),...
 %                         modelspec.cvfunc(t1,t2,dt1t2,proposal,dy1y2,fp1fp2)',...

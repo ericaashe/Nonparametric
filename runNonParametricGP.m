@@ -1,4 +1,5 @@
-%% for Ashe et al. 2021 Non-parametric paper
+%% for Ashe et al. in proof
+%% Non-parametric methods
 %% sensitivity tests: run_type = 1
 %% validation experiments: run_type = 2
 
@@ -6,15 +7,15 @@
 
 if exist('Seed', 'Var')
 else
-    Seed = 1; 
-    truth_flag = 1;
-    run_type = 2;
-    run_start = 1;
-    run_end = 2;
+    Seed = 3; 
+    truth_flag = 2;
+    run_type = 1;
+    run_start = 36;
+    run_end = 36;
 end
 
 %% define a field that will name the folder for results
-df = '051121';
+df = '01082022';
 
 if ~exist('pd','var')
     pd = pwd;
@@ -32,6 +33,8 @@ fprintf('%0.0f new comp threads\n',[newNCT]);
 % 2 for time-series synthetic validation 
 
 %% run set-up scripts (define the directories and import data)
+addpath([pd '/MFILES']);
+addpath(pd);
 runSetUp;
     
 if run_type == 1           % sensitivity tests

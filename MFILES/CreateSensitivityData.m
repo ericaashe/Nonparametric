@@ -161,7 +161,8 @@ elseif dat_type==6                  % Limiting data
     limiting(1)=0;
     cspecies(b1)=0;
     cspecies(b2)=0;
-elseif dat_type==7                  % limiting & normal
+    
+elseif dat_type==7                  % limiting & orbicella
 %% select half of the data to be orbicella and half limiting
     all=find(limiting>-20);
     limiting(all)=20;
@@ -177,14 +178,22 @@ elseif dat_type==7                  % limiting & normal
     end
     rng(Seed+13*jj);
     offset=-1000*random(distKernel{9},N/2,1); 
-%     Y_fin(cor)=Y_synth(cor)+offset;
-%     dY_c=max(750*randn([N/2,1]),500);
-%     dY(cor)=dY_c;
+    Y_fin(cor)=Y_synth(cor)+offset;
+    dY_c=max(750*randn([N/2,1]),500);
+    dY(cor)=dY_c;
     limiting(cor)=2;
     cspecies(cor)=9;
+%     Y_fin(cor)=Y_synth(cor)+offset;
+%     limiting(cor)=2;
+%     cspecies(cor)=9;
     oth=find(limiting==20);
 %     dY(oth) = max(1000*randn([N/2,1]),650);
     rng(Seed+14*jj);
+dY_l=max(850+100*randn([N/2,1]),500);
+dY(oth) = dY_l;
+rng(Seed*2);
+meas_err(oth) = dY_l.*randn([N/2,1]);
+Y_synth(oth) = Y_synth(oth) + meas_err(oth);
     offset=70000*rand(N/2,1)-35000;
     Y_fin(oth)=Y_synth(oth)+offset;
     b1 = find(offset<0);b0=find(limiting==20);b2=find(offset>=0);
@@ -265,6 +274,11 @@ if min(ages)<0
 end
 
 plot(ages,Y_fin,'*');
+if dat_type ==7
+       plot(ages(oth),Y_fin(oth),'r*');
+       plot(ages(cor),Y_fin(cor),'k*');
+end       
+
 cspec=cspecies';
 pdfwrite(['True_plus_Corrup_' df '_' num2str(jj)]);
 

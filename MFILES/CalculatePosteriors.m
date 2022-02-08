@@ -145,8 +145,8 @@ else
     for iii=1:size(thetas,2)
         if ~isempty(thinned_ts)
             [fs(:,iii),sds(:,iii),V2s,testlocs,logp_test]=RegressHoloceneDataSets_sampled(wdataset,tsdef,modelspec(1),thetas(:,iii)',trainsubx,noiseMasks(:,:),testt,refyear,collinear,[],[],ys(:,iii),thinned_ts(:,iii),trainsubx);
-        elseif ~isempty(ys)
-            [fs(:,iii),sds(:,iii),V2s,testlocs,logp_test]=RegressHoloceneDataSets_sampled(wdataset,tsdef,modelspec(1),thetas(:,iii)',trainsubx,noiseMasks(:,:),testt,refyear,collinear,[],[],ys(:,iii),[],trainsubx);
+        elseif ~isempty(ys) && size(ys,2)>1
+                [fs(:,iii),sds(:,iii),V2s,testlocs,logp_test]=RegressHoloceneDataSets_sampled(wdataset,tsdef,modelspec(1),thetas(:,iii)',trainsubx,noiseMasks(:,:),testt,refyear,collinear,[],[],ys(:,iii),[],trainsubx);
         else
             %% for models that don't sample the data.  Only the limiting==0 trainsub should be used.
             [fs(:,iii),sds(:,iii),V2s,testlocs,logp_test]=RegressHoloceneDataSets_sampled(wdataset,tsdef,modelspec(1),thetas(:,iii)',trainsub,noiseMasks(:,:),testt,refyear,collinear,[],[],[],[],trainsub);

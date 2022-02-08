@@ -1,20 +1,29 @@
 %% add the paths to run all of the scripts
-
-clearvars -except run_type Seed df pc pctext truth_flag pd synthflag run_start run_end
+clearvars -except run_type Seed df pc pctext pd distKern0 distKernel distKernFlor jjj all run_start run_end counter CEFILES IFILES synthflag truth_flag Seed dateField rng datGIA sfile distNorm distKern df
 
 if ~exist('run_type', 'var')==1
     run_type = 1; Seed = 4;
 end
 
+% if contains(pwd, 'scratch')
+%     pd = '/scratch/ea289/Code/NP';
+%     addpath([pd '/scripts']);
+% else
+%     pd = '/Users/ericaashe/Dropbox/Code/NP_publish/';
+% end
+
 addpath([pd '/MFILES']);
 addpath(pd);
+
 IFILES=[pd '/IFILES'];
 
 if run_type == 1        % sensitivity tests
-    spatial = 0; modno = 3; synthflag = 1; nsamps = 20000; nburn = 100; thetachange = 29;
+    spatial = 0; modno = 3; synthflag = 1; nsamps = 500; nburn = 100; thetachange = 29;
+%    spatial = 0; modno = 3; synthflag = 1; nsamps = 20000; nburn = 100; thetachange = 29;
     stepchange = 51; nthin = 10; sampnorm = 0;
 elseif run_type == 2    % validation, temporal only
-    spatial = 0; modno = 3; synthflag = 2; nsamps = 500000; nburn = 100; thetachange = 15;
+    spatial = 0; modno = 3; synthflag = 2; nsamps = 1000; nburn = 10; thetachange = 15;
+%    spatial = 0; modno = 3; synthflag = 2; nsamps = 500000; nburn = 100; thetachange = 15;
     stepchange = 12;  nthin = 10; sampnorm = 0;
 end
  
@@ -27,7 +36,15 @@ else
     dateField = [df '_Val'];
 end
 
-load distKern.mat
+if run_start > 48
+    load distNorm.mat;
+    load distKern.mat;
+else
+    load distKern.mat;
+end
+
+distKern0=distKern;
+
 datHolo=importdata(fullfile(IFILES,distFile));
 lb=-300000; ub=200000; 
 
@@ -164,3 +181,6 @@ end
 sfile=['init_dat'];
 save(sfile);
 
+if exist('distNorm','var')
+    distKern=distNorm;
+end

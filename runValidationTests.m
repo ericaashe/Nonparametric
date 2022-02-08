@@ -73,6 +73,8 @@ PlotUncorrelatedModel;
     fprintf(fid,'%0s\t', dateField);
     fprintf(fid,'%0.f\t', Seed);
     fprintf(fid,'%0.3f\t', logp_hibbert );
+    fprintf(fid,'%0.3f\t', CI95);
+    fprintf(fid,'%0.3f\t', CI67);
     fprintf(fid,'%0.3f\t', hib_m_resid);
     fprintf(fid,'%0.3f\t', hib_med_resid);
     fprintf(fid,'%0.3f\t', hib_abs_mean_resid);
